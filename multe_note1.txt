@@ -1,0 +1,13 @@
+->Multer install
+->Multer configureation with config->folder(create multer file)
+-> work on multer
+->work on controller
+->work on maind server file
+
+
+
+==========================================>
+1.Tag name ekta schema make korte hobe jeikhane photo or logo upaload hobe na
+2.Tag er jonno kono multer middleware dorkar nai karon amra tag er vitor kono photo or logo upaload korbo na so middleware dorkar nai .
+3.(post_create metod a id dorkar nai),(upeate method a id dorkar asa),(delete mehod a id dorkar asa),(get single method e id dorkar asa),(get all data method a id dorkar nai)
+4.Tag a jehoto file theke logo upaload hobe na sihoto eitate form data lagbe na just raw.json body pathate hobe

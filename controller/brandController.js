@@ -2,6 +2,7 @@
 
 import asyncHandler from "express-async-handler";
 import prisma from "../config/prismaClient.js";
+import { cloud_upload } from "../utils/cloud.js";
 
 
 
@@ -31,8 +32,15 @@ export const getSingledata = asyncHandler(async (req, res) => {
 /**
  * @method POSt/create data
  * @endpoint /api/v1/brand/id-dorkar hoy na post method a data create  korte
+ * THis is the without multer create data sending on database
+ * 
+ * NExt sending data to database with use multer midlleware
  */
+/*
 export const createData = asyncHandler(async (req, res) => {
+
+    console.log(req.body);
+    return false;
 
     const create_data = await prisma.brand.create({
 
@@ -41,6 +49,26 @@ export const createData = asyncHandler(async (req, res) => {
 
     res.status(200).json(create_data);
 })
+    */
+export const create_multer_data = asyncHandler(async (req, res) => {
+    // console.log(req.file);
+
+    /**use cloudinary from clouduplaod function */
+    const file_data = await cloud_upload(req.file.path);
+
+    // return  false
+    const create_data = await prisma.brand.create({
+        data: {
+            ...req.body,
+            logo: file_data.secure_url
+
+        }
+    })
+
+    res.status(201).json(create_data)
+})
+
+
 
 /**
  * @method PUT-PATCH/edit-single/multiple/update data
@@ -55,6 +83,7 @@ export const updateData = asyncHandler(async (req, res) => {
 
     res.status(200).json(edit_data);
 })
+
 
 /**
  * @method DELETE/delte data
