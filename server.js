@@ -6,6 +6,7 @@ import colors from "colors"
 import brandRouter from "./router/brand.js"
 import categoryRouter from "./router/category.js"
 import tagRouter from "./router/tag.js"
+import productRouter from "./router/product.js"
 
 
 /**--*/
@@ -23,10 +24,12 @@ app.use("/api/v1/brand", brandRouter)
 app.use("/api/v1/category", categoryRouter)
 /**Tag related routing config */
 app.use("/api/v1/tag", tagRouter)
+/** */
+app.use("/api/v1/product",productRouter)
 
 
 /**server config */
 app.listen(PORT, () => {
-    console.log(`server is running on ${PORT} number port`.bgRed.cyan);
+    console.log(`server is running on ${PORT} number port`.bgRed.white.bold);
 })
 

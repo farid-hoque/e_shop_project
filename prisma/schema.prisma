@@ -13,13 +13,31 @@ model Brand {
   name String  @unique
   slug String? @unique
   logo String?
+  /* Relation with PRoduct model->1ta Brand-er onekgula product thakbe*/
+  products Product[]
 }
+/*
+Many to Many Relation  with category and product & category and Brand
+->suppose one prodcut has a many category || one category has a many product, like pr-iphone,ca-mobile,eletronics etc.
 
+->সাধারণত Brand এবং Category direct relationship এ থাকে না, কিন্তু Brand এর products আছে, আর product এর categories আছে, তাই indirectly brand-category mapping করা যায়।
+
+-Brand: Samsung
+
+Products: Galaxy S23, Galaxy A53
+
+Categories: Smartphones, Electronics
+
+Samsung এর products বিভিন্ন category তে আছে।
+*/
 model Category {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String   @unique
   slug      String   @unique
   photo     String?
+/*products for many to many concepts*/
+  products productCategory[]
+
   createdAt DateTime @default(now())
 }
 
@@ -28,4 +46,35 @@ model Tag {
   name   String  @unique
   slug   String  @unique
   status Boolean @default(true)
+}
+
+/*Final schema of Prisma orm
+-product To Brand Relation-1st
+*/
+model Product{
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+
+  name String @unique
+  slug String @unique
+  regularPrice Int
+  stock Int @default(0)
+/*RElation with BRand-Model*/
+brandId String @db.ObjectId
+brand Brand @relation(fields: [brandId], references: [id])
+/*categories for many to many concept*/
+categories productCategory[]
+
+  createdAt DateTime @default(now())
+}
+
+/*উপরোক্ত ক্ষেত্রে যদি Many-to-Many হয়, তাহলে একটি আলাদা তৃতীয় পক্ষের (3rd party) schema বা table তৈরি করতে হয়।*/
+
+model productCategory {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+ 
+  productId String @db.ObjectId
+  categoryId String @db.ObjectId
+
+  product Product @relation(fields: [productId], references: [id], onDelete:Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete:Cascade)
 }

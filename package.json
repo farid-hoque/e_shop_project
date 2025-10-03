@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "db:all":"pnpm dlx prisma generate && pnpm dlx prisma db push"
   },
   "keywords": [],
   "author": "",

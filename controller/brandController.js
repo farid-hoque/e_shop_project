@@ -11,7 +11,12 @@ import { cloud_upload } from "../utils/cloud.js";
  * @endpoint /api/v1/brand
  */
 export const getAlldata = asyncHandler(async (req, res) => {
-    const data = await prisma.brand.findMany()
+    /**include er fole brand wise product chole asbe */
+    const data = await prisma.brand.findMany({
+        include: {
+            products:true
+        }
+    })
 
     res.status(200).json(data);
 })
